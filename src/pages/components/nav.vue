@@ -1,6 +1,6 @@
 <template>
   <nav id="myNav">
-    <a v-for="(link, index) in linkList" :href="link.href" :key="index">{{link.text}}</a>
+    <router-link v-for="(link, index) in linkList" :to="link.href" :key="index">{{link.text}}</router-link>
   </nav>
 </template>
 
@@ -11,16 +11,12 @@ export default {
       return {
           linkList: [
               {
-                  href: '/home',
+                  href: '/',
                   text: 'Home'
               },
               {
                   href: '/list',
                   text: 'List'
-              },
-              {
-                  href: '/about',
-                  text: 'About'
               }
           ]
       }
