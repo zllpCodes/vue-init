@@ -12,6 +12,19 @@ module.exports = merge(common, {
         filename: 'js/[name].[hash:5].js',
         path: path.resolve(__dirname, '../dist')
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    name: 'vendor',
+                    test: /[\\/]node_module[\\/]/,
+                    priority: -10,
+                    chunks: 'initial'
+                }
+            }
+        }
+    },
     module: {
         rules: [
             {
@@ -23,10 +36,15 @@ module.exports = merge(common, {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
-                    loaders: {
-                        scss: 'vue-style-loader!css-loader!sass-loader',
-                        sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-                    }
+
+                    // loaders: {
+                    //     scss: 'vue-style-loader!css-loader!sass-loader',
+                    //     sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax',
+
+                    //     // transformToRequire: {
+                    //     //     img: 'src'
+                    //     // }
+                    // }
                 }
             },
             {
@@ -47,10 +65,10 @@ module.exports = merge(common, {
                 test: /\.(png|jpg|svg|gif)$/,
                 use: [
                     {
-                        loader: 'file-loader',
+                        loader: 'url-loader',
                         options: {
-                            limit: 5000,
-                            name: 'imgs/[name].[hash:5].[ext]'
+                            limit: 10240,
+                            name: 'imgs/[name].[contenthash:5].[ext]'
                         }
                     },
                     {
@@ -69,6 +87,9 @@ module.exports = merge(common, {
                             },
                             gifsicle: {
                                 interlaced: false
+                            },
+                            webp: {
+                              quality: 75
                             }
                         }
                     }
@@ -81,7 +102,7 @@ module.exports = merge(common, {
         new MiniCssExtractPlugin({
             filename: 'css/[name].[hash:5].css'
         }),
-        new OptimizeCSSAssetsPlugin({}),
+        new OptimizeCSSAssetsPlugin(),
         new UglifyJsPlugin({
             uglifyOptions: {
                 compress: {

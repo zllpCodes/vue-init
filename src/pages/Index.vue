@@ -5,6 +5,7 @@
     <div v-for="(img, index) in imgList" :key="index">
       <img :src="img">
     </div>
+    <div class="nice-pic"></div>
   </div>
 </template>
 
@@ -18,21 +19,10 @@ export default {
   },
   mounted() {
     this.$ajax.get("/api/pictureList").then(res => {
-      this.imgList = res.data.data;
+      let result = res.data;
+      if(result.code !== 200) return;
+      this.imgList = result.data;
     });
   }
 };
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-$width: 50rem;
-#index {
-  margin-top: 60px;
-  transform: rotate(0deg);
-  img {
-    width: $width;
-  }
-}
-</style>
-
-

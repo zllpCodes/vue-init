@@ -1,7 +1,6 @@
-const webpack = require('webpack'),
-    path = require('path'),
+const path = require('path'),
     VueLoaderPlugin = require('vue-loader/lib/plugin'),
-    HTMLWebpackPlugin = require('html-webpack-plugin')
+    HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './src/entry/index.js',
@@ -29,7 +28,7 @@ module.exports = {
                 test: /\.(png|jpg|svg|gif)$/,
                 use: [
                     {
-                        loader: 'file-loader',
+                        loader: 'url-loader',
                         options: {
                             limit: 5000,
                             name: 'imgs/[name].[ext]'
@@ -40,7 +39,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HashedModuleIdsPlugin(),
         new VueLoaderPlugin(),
         new HTMLWebpackPlugin({
             template: path.resolve(__dirname, '../public/index.html')

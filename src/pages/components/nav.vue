@@ -23,13 +23,3 @@ export default {
   }
 };
 </script>
-
-
-<style lang="scss" scoped>
-#myNav {
-    a {
-        display: inline-block;
-        margin: 0 10px;
-    }
-}
-</style>
