@@ -1,5 +1,6 @@
 const merge = require('webpack-merge'),
     common = require('./webpack.base'),
+    rewrites = require('../rewrites.config.js'),
     path = require('path'),
     apiMocker = require('webpack-api-mocker');
 
@@ -8,7 +9,9 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: '../public',
-        historyApiFallback: true,
+        historyApiFallback: {
+            rewrites
+        },
         before: function(app) {
             apiMocker(app, path.resolve('public/mocker.js'));
         },
